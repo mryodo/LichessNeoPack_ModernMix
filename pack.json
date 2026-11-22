@@ -44,6 +44,34 @@
     {
       "name": "Illustrated",
       "path": "pieces/illustrated/{piece}.png"
+    },
+    {
+      "name": "Madware",
+      "path": "pieces/madware/{piece}.png"
+    },
+    {
+      "name": "GNOME Simple",
+      "path": "pieces/gnome/{piece}.svg"
+    },
+    {
+      "name": "Ivory",
+      "path": "pieces/ivory/{piece}.png"
+    },
+    {
+      "name": "M484",
+      "path": "pieces/m484/{piece}.png"
+    },
+    {
+      "name": "Silhouette",
+      "path": "pieces/silhouette/{piece}.png"
+    },
+    {
+      "name": "Bauhaus",
+      "path": "pieces/bauhaus/{piece}.svg"
+    },
+    {
+      "name": "Bauhaus Mono",
+      "path": "pieces/bauhausmono/{piece}.svg"
     }
   ],
   "board": [

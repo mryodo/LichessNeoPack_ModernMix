@@ -1,5 +1,5 @@
 # usage: python3 -I build.py <dl dir> <out repo dir>
-import sys, os, json, urllib.request
+import sys, os, io, json, subprocess, urllib.request
 from PIL import Image, ImageFilter
 DL, OUT = sys.argv[1], sys.argv[2]
 ROLES = 'KQRBNP'
@@ -73,6 +73,71 @@ sheet('Flat Pixel', 'flatpixel', 'pixel-art-chess-set/Chess Flat single color 16
 files('Spicy Pixel', 'spicypixel', 'chess-pieces/chess-pieces-png_x/color/{color}_{role}.png', 128)
 files('Silver Pixel', 'silverpixel', 'pixel-art-asset-2/Chess_x/Chess/{color}_{role}.png', 128)
 files('Illustrated', 'illustrated', 'chess-pack/chess-pack_x/chess-{role}-{color}.png', 256, smooth=True)
+
+# --- classic-shaped sets, comfortable to play
+# Madware's Chess Set (Madware, CC0): numbered 1024px tiles
+mw = f"{DL}/madwares-chess-set/x/Madware's Chess Set/tiles/1024_{{:02}}.png"
+for n, p in zip([1, 2, 3, 4, 5, 6, 12, 8, 13, 14, 10, 11], ['bR', 'bN', 'bB', 'bQ', 'bK', 'bP', 'wR', 'wN', 'wB', 'wQ', 'wK', 'wP']):
+    os.makedirs(f'{OUT}/pieces/madware', exist_ok=True)
+    Image.open(mw.format(n)).convert('RGBA').resize((256, 256), Image.LANCZOS).save(f'{OUT}/pieces/madware/{p}.png')
+pieceset('Madware', 'madware')
+
+# GNOME Chess "simple" (W3C license), SVG
+os.makedirs(f'{OUT}/pieces/gnome', exist_ok=True)
+for c, cn in (('w', 'white'), ('b', 'black')):
+    for r in ROLES:
+        open(f'{OUT}/pieces/gnome/{c}{r}.svg', 'wb').write(open(f'{DL}/gnome/simple/{cn}{NAMES[r].capitalize()}.svg', 'rb').read())
+pieceset('GNOME Simple', 'gnome', 'svg')
+
+# looneybits' chess pieces set (CC BY 3.0): two 6-piece strips, P R N B Q K
+for c in 'wb':
+    im = Image.open(f'{DL}/chess-pieces-set/chess_pieces_{"white" if c == "w" else "black"}.png').convert('RGBA')
+    w = im.width // 6
+    top = im.getbbox()[1]; im = im.crop((0, max(0, top - 4), im.width, im.height))  # drop empty space above the king
+    for i, r in enumerate('PRNBQK'):
+        crop = im.crop((i * w, 0, i * w + w, im.height))
+        s2 = max(crop.size); sq = Image.new('RGBA', (s2, s2)); sq.paste(crop, ((s2 - crop.width) // 2, s2 - crop.height))
+        os.makedirs(f'{OUT}/pieces/ivory', exist_ok=True)
+        sq.resize((256, 256), Image.LANCZOS).save(f'{OUT}/pieces/ivory/{c}{r}.png')
+pieceset('Ivory', 'ivory')
+
+# M484 (Master484, CC BY 4.0): 26px cells, step 27, opaque blue background
+def m484_clear(img):
+    img.putdata([(0, 0, 0, 0) if p[:3] == (119, 153, 187) else p for p in img.get_flattened_data()]); return img
+sheet('M484', 'm484', 'm484-chess-set/chess_pieces_v5.png', 27, 'KQRBNP', {'w': 0, 'b': 1}, size=208,
+      box=lambda c, i: (5 + 27 * i, 8 if c == 'w' else 38, 31 + 27 * i, 34 if c == 'w' else 64),
+      fix={'w': m484_clear, 'b': m484_clear})
+
+# femrek's single-colour SVG silhouettes (CC0), recoloured: cream with an outline vs charcoal
+for c in 'wb':
+    for r, f in zip(ROLES, ['king_1', 'queen', 'rok', 'bishop_0', 'knight_3', 'pawn']):
+        png = subprocess.run(['rsvg-convert', '-w', '216', '-h', '216', '--keep-aspect-ratio', f'{DL}/chess-pieces-in-svg-format/{f}.svg'], capture_output=True, check=True).stdout
+        a = Image.open(io.BytesIO(png)).convert('RGBA').getchannel('A')
+        body = Image.new('RGBA', a.size, (245, 241, 233, 255) if c == 'w' else (36, 38, 43, 255)); body.putalpha(a)
+        if c == 'w':
+            body = outline(body)  # 1px is too thin at this size: grow twice more
+            body = outline(outline(body.crop((1, 1, body.width - 1, body.height - 1))))
+        save(body, f'{OUT}/pieces/silhouette/{c}{r}.png', 256)
+pieceset('Silhouette', 'silhouette')
+
+# --- Bauhaus: own geometric set (CC0). Shapes follow the moves: L knight, diagonal bishop, round queen.
+SHAPES = {
+    'P': '<rect x="33" y="56" width="34" height="34"/>',
+    'R': '<rect x="27" y="34" width="46" height="56"/>',
+    'N': '<path d="M27 90H73V64H51V28H27Z"/><rect class="a" x="27" y="28" width="24" height="18"/>',
+    'B': '<rect x="32" y="72" width="36" height="18"/><path class="a" d="M50 20L75 46L50 72L25 46Z"/>',
+    'Q': '<rect x="29" y="64" width="42" height="26"/><circle class="a" cx="50" cy="42" r="21"/>',
+    'K': '<rect x="27" y="60" width="46" height="30"/><path class="a" d="M50 18L71 39L50 60L29 39Z"/><rect x="45" y="6" width="10" height="16"/>',
+}
+ACCENT = dict(P='', R='', N='#d63b2a', B='#2347a0', Q='#d63b2a', K='#f2b705')
+for folder, name, accents in (('bauhaus', 'Bauhaus', True), ('bauhausmono', 'Bauhaus Mono', False)):
+    os.makedirs(f'{OUT}/pieces/{folder}', exist_ok=True)
+    for c, body, line in (('w', '#f1ebdd', '#1a1a1a'), ('b', '#232326', '#000000')):
+        for r in ROLES:
+            acc = ACCENT[r] if accents and ACCENT[r] else body
+            open(f'{OUT}/pieces/{folder}/{c}{r}.svg', 'w').write(
+                f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="7 3 86 90"><style>*{{fill:{body};stroke:{line};stroke-width:3.5;stroke-linejoin:miter}}.a{{fill:{acc}}}</style>{SHAPES[r]}</svg>')
+    pieceset(name, folder, 'svg')
 
 # --- boards: own SVGs (CC0)
 def svg(light, dark, extra='', darkfill=None, defs=''):
