@@ -225,5 +225,38 @@ for n, name, light, dark in [(1, 'Pixel Plum', '#d5d5d5', '#413141'), (3, 'Pixel
     im.transpose(Image.FLIP_LEFT_RIGHT).resize((1024, 1024), Image.NEAREST).save(f'{OUT}/boards/{name.lower().replace(" ", "-")}.png')
     pack['board'].append({'name': name, 'image': f'boards/{name.lower().replace(" ", "-")}.png', 'light': light, 'dark': dark})
 
+# editor colour schemes (palettes only, drawn here; CC0)
+EDITORS = {
+    'Catppuccin': ('#b4befe', '#45475a'), 'Nord': ('#d8dee9', '#5e81ac'), 'Dracula': ('#bd93f9', '#44475a'),
+    'Gruvbox': ('#ebdbb2', '#458588'), 'Solarized': ('#fdf6e3', '#2aa198'), 'Tokyo Night': ('#c0caf5', '#3d59a1'),
+    'Rose Pine': ('#ebbcba', '#31748f'), 'Everforest': ('#e6e2cc', '#93b259'), 'Kanagawa': ('#dcd7ba', '#7e9cd8'),
+    'One Dark': ('#abb2bf', '#4b5263'),
+}
+for name, (light, dark) in EDITORS.items():
+    fn = 'editor-' + name.lower().replace(' ', '-')
+    open(f'{OUT}/boards/{fn}.svg', 'w').write(svg(light, dark))
+    pack['board'].append({'name': name, 'image': f'boards/{fn}.svg', 'light': light, 'dark': dark})
+
+# stone and leather from ambientCG textures (CC0): each square a different patch of the texture
+import random
+from PIL import ImageStat
+def texboard(name, a, b):
+    tex = {k: Image.open(f'{DL}/acgtex/{k}/{k}_1K-JPG_Color.jpg').convert('RGB') for k in (a, b)}
+    rnd = random.Random(a + b)
+    im = Image.new('RGB', (1024, 1024))
+    for y in range(8):
+        for x in range(8):
+            t = tex[a if (x + y) % 2 == 0 else b]
+            ox, oy = rnd.randrange(t.width - 128), rnd.randrange(t.height - 128)
+            im.paste(t.crop((ox, oy, ox + 128, oy + 128)), (x * 128, y * 128))
+    fn = f'boards/{name.lower().replace(" ", "-").replace("&", "and")}.jpg'
+    im.save(f'{OUT}/{fn}', quality=88)
+    mean = lambda k: '#%02x%02x%02x' % tuple(int(v) for v in ImageStat.Stat(tex[k]).mean)
+    pack['board'].append({'name': name, 'image': fn, 'light': mean(a), 'dark': mean(b)})
+for name, a, b in [('Terrazzo Navy', 'Terrazzo011', 'Terrazzo015'), ('Terrazzo Green', 'Terrazzo009', 'Terrazzo016'),
+                   ('Granite', 'Granite002A', 'Fabric004'), ('Onyx & Leather', 'Onyx004', 'Leather030'),
+                   ('Travertine', 'Travertine009', 'Travertine005'), ('Travertine Noir', 'Travertine009', 'Leather026')]:
+    texboard(name, a, b)
+
 json.dump(pack, open(f'{OUT}/pack.json', 'w'), indent=2)
 print(len(pack['pieces']), 'piece sets,', len(pack['board']), 'boards')

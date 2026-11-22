@@ -194,6 +194,102 @@
       "image": "boards/pixel-ink.png",
       "light": "#d5d5d5",
       "dark": "#000000"
+    },
+    {
+      "name": "Catppuccin",
+      "image": "boards/editor-catppuccin.svg",
+      "light": "#b4befe",
+      "dark": "#45475a"
+    },
+    {
+      "name": "Nord",
+      "image": "boards/editor-nord.svg",
+      "light": "#d8dee9",
+      "dark": "#5e81ac"
+    },
+    {
+      "name": "Dracula",
+      "image": "boards/editor-dracula.svg",
+      "light": "#bd93f9",
+      "dark": "#44475a"
+    },
+    {
+      "name": "Gruvbox",
+      "image": "boards/editor-gruvbox.svg",
+      "light": "#ebdbb2",
+      "dark": "#458588"
+    },
+    {
+      "name": "Solarized",
+      "image": "boards/editor-solarized.svg",
+      "light": "#fdf6e3",
+      "dark": "#2aa198"
+    },
+    {
+      "name": "Tokyo Night",
+      "image": "boards/editor-tokyo-night.svg",
+      "light": "#c0caf5",
+      "dark": "#3d59a1"
+    },
+    {
+      "name": "Rose Pine",
+      "image": "boards/editor-rose-pine.svg",
+      "light": "#ebbcba",
+      "dark": "#31748f"
+    },
+    {
+      "name": "Everforest",
+      "image": "boards/editor-everforest.svg",
+      "light": "#e6e2cc",
+      "dark": "#93b259"
+    },
+    {
+      "name": "Kanagawa",
+      "image": "boards/editor-kanagawa.svg",
+      "light": "#dcd7ba",
+      "dark": "#7e9cd8"
+    },
+    {
+      "name": "One Dark",
+      "image": "boards/editor-one-dark.svg",
+      "light": "#abb2bf",
+      "dark": "#4b5263"
+    },
+    {
+      "name": "Terrazzo Navy",
+      "image": "boards/terrazzo-navy.jpg",
+      "light": "#d6cdc1",
+      "dark": "#25343f"
+    },
+    {
+      "name": "Terrazzo Green",
+      "image": "boards/terrazzo-green.jpg",
+      "light": "#c7c0b8",
+      "dark": "#556763"
+    },
+    {
+      "name": "Granite",
+      "image": "boards/granite.jpg",
+      "light": "#b4b1ac",
+      "dark": "#2e2e31"
+    },
+    {
+      "name": "Onyx & Leather",
+      "image": "boards/onyx-and-leather.jpg",
+      "light": "#cac2b1",
+      "dark": "#392720"
+    },
+    {
+      "name": "Travertine",
+      "image": "boards/travertine.jpg",
+      "light": "#dfcbac",
+      "dark": "#5f5147"
+    },
+    {
+      "name": "Travertine Noir",
+      "image": "boards/travertine-noir.jpg",
+      "light": "#dfcbac",
+      "dark": "#191818"
     }
   ]
 }

@@ -1,6 +1,6 @@
 # Lichess Neo pack: Modern Mix
 
-33 piece sets and 10 boards for [Lichess Neo](https://github.com/theophile-wallez/LichessNeo).
+33 piece sets and 26 boards for [Lichess Neo](https://github.com/theophile-wallez/LichessNeo).
 Import: paste this repository's link under **Packs** in the extension's settings.
 
 ## Pieces
@@ -48,5 +48,12 @@ Illustrated was downscaled to 256px. Icon sets were filled in and recoloured
 Neon Grid, Game Boy, Blueprint, Terminal, Sakura, Bauhaus, Concrete, Sunset:
 drawn for this pack (SVG, CC0). Pixel Plum, Pixel Ink: Graciano Choc's
 Pixel Art Chess Set (CC0), mirrored so a8 is light.
+
+Catppuccin, Nord, Dracula, Gruvbox, Solarized, Tokyo Night, Rose Pine,
+Everforest, Kanagawa, One Dark: drawn in those editor themes' colours (CC0).
+
+Terrazzo Navy, Terrazzo Green, Granite, Onyx & Leather, Travertine, Travertine
+Noir: put together from [ambientCG](https://ambientcg.com) textures (CC0),
+each square a different patch.
 
 `build.py` regenerates everything from the downloaded source packs.
