@@ -1,0 +1,111 @@
+{
+  "name": "Modern Mix",
+  "pieces": [
+    {
+      "name": "Skulls",
+      "path": "pieces/skulls/{piece}.svg"
+    },
+    {
+      "name": "Eyes",
+      "path": "pieces/eyes/{piece}.svg"
+    },
+    {
+      "name": "Prmi",
+      "path": "pieces/prmi/{piece}.svg"
+    },
+    {
+      "name": "Freak",
+      "path": "pieces/freak/{piece}.svg"
+    },
+    {
+      "name": "Heroes",
+      "path": "pieces/heroes/{piece}.png"
+    },
+    {
+      "name": "One Bit",
+      "path": "pieces/onebit/{piece}.png"
+    },
+    {
+      "name": "Gem Pixel",
+      "path": "pieces/gempixel/{piece}.png"
+    },
+    {
+      "name": "Flat Pixel",
+      "path": "pieces/flatpixel/{piece}.png"
+    },
+    {
+      "name": "Spicy Pixel",
+      "path": "pieces/spicypixel/{piece}.png"
+    },
+    {
+      "name": "Silver Pixel",
+      "path": "pieces/silverpixel/{piece}.png"
+    },
+    {
+      "name": "Illustrated",
+      "path": "pieces/illustrated/{piece}.png"
+    }
+  ],
+  "board": [
+    {
+      "name": "Neon Grid",
+      "image": "boards/neon-grid.svg",
+      "light": "#3a3270",
+      "dark": "#1a1538"
+    },
+    {
+      "name": "Game Boy",
+      "image": "boards/game-boy.svg",
+      "light": "#9bbc0f",
+      "dark": "#306230"
+    },
+    {
+      "name": "Blueprint",
+      "image": "boards/blueprint.svg",
+      "light": "#2f6bb8",
+      "dark": "#1d4f94"
+    },
+    {
+      "name": "Terminal",
+      "image": "boards/terminal.svg",
+      "light": "#1d4a26",
+      "dark": "#0b1f10"
+    },
+    {
+      "name": "Sakura",
+      "image": "boards/sakura.svg",
+      "light": "#fdeef1",
+      "dark": "#eaa0b4"
+    },
+    {
+      "name": "Bauhaus",
+      "image": "boards/bauhaus.svg",
+      "light": "#f1e9d8",
+      "dark": "#1f3d8c"
+    },
+    {
+      "name": "Concrete",
+      "image": "boards/concrete.svg",
+      "light": "#cfcfca",
+      "dark": "#8e8e89"
+    },
+    {
+      "name": "Sunset",
+      "image": "boards/sunset.svg",
+      "light": "#fff4e6",
+      "dark": "#c85a7c"
+    },
+    {
+      "name": "Pixel Plum",
+      "image": "boards/pixel-plum.png",
+      "light": "#d5d5d5",
+      "dark": "#413141"
+    },
+    {
+      "name": "Pixel Ink",
+      "image": "boards/pixel-ink.png",
+      "light": "#d5d5d5",
+      "dark": "#000000"
+    }
+  ]
+}
