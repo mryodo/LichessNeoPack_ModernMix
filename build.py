@@ -171,26 +171,55 @@ def place(im, path):
     """Icons fill their whole box: give them a margin, bottom-heavy like real pieces."""
     os.makedirs(os.path.dirname(path), exist_ok=True)
     sq = Image.new('RGBA', (256, 256)); sq.paste(im, ((256 - im.width) // 2, 256 - im.height - 10), im); sq.save(path)
-def iconset(name, folder, solid=None, line=None, strip_bg=False):
-    """line: outlined glyph, filled in for the body; solid: filled glyph, used when there is no line one."""
+def svgsrc(pattern, strip_bg=False):
+    return lambda r: alpha(pattern.format(role=r), strip_bg=strip_bg)
+def glyphsrc(fontfile, first):
+    """Unicode chess glyphs (U+2654 white king … ) from a font, all on one baseline so relative sizes hold."""
+    from PIL import ImageFont, ImageDraw
+    font = ImageFont.truetype(fontfile, 210)
+    def src(r):
+        im = Image.new('L', (224, 224)); ImageDraw.Draw(im).text((112, 206), chr(first + 'KQRBNP'.index(r)), font=font, fill=255, anchor='ms')
+        return im
+    return src
+def iconset(name, folder, line=None, solid=None):
+    """line: outlined glyph, filled in for the body (white, and black when there is no solid one);
+    solid: filled glyph for black (its cut-out details turn grey), or both sides when there is no line one."""
     from PIL import ImageChops
     for r in ROLES:
-        l = alpha(line.format(role=r)) if line else None
+        l = line(r) if line else None
+        s = solid(r) if solid else None
         if l is None:  # solid only: a grown silhouette makes white's outline
-            s = alpha(solid.format(role=r), strip_bg=strip_bg)
             ring = s.filter(ImageFilter.MaxFilter(7))
-            w = Image.alpha_composite(layer(ring, INK), layer(s, CREAM)); b = Image.alpha_composite(layer(ring, CHAR), layer(s, CHAR))
+            w = Image.alpha_composite(layer(ring, INK), layer(s, CREAM))
+        else:
+            w = Image.alpha_composite(layer(filled(l), CREAM), layer(l, INK))
+        if s is not None:
+            b = Image.alpha_composite(layer(filled(s), GREY), layer(s, CHAR))
         else:
             body = filled(l)
             inner = ImageChops.multiply(l, body.filter(ImageFilter.MinFilter(29)).filter(ImageFilter.MinFilter(29)))  # drop the outer contour
-            w = Image.alpha_composite(layer(body, CREAM), layer(l, INK)); b = Image.alpha_composite(layer(body, CHAR), layer(inner, GREY))
+            b = Image.alpha_composite(layer(body, CHAR), layer(inner, GREY))
         place(w, f'{OUT}/pieces/{folder}/w{r}.png'); place(b, f'{OUT}/pieces/{folder}/b{r}.png')
     pieceset(name, folder)
-iconset('Font Awesome', 'fontawesome', line=f'{C}/fa_reg/{{role}}.svg')
-iconset('Tabler', 'tabler', line=f'{C}/tabler_o/{{role}}.svg')
-iconset('Material', 'material', solid=f'{C}/mdi/{{role}}.svg')
-iconset('Lucide', 'lucide', line=f'{C}/lucide/{{role}}.svg')
-iconset('Game Icons', 'gameicons', solid=f'{C}/gameicons/{{role}}.svg', strip_bg=True)
+I = f'{DL}/ic'
+iconset('Font Awesome', 'fontawesome', line=svgsrc(f'{C}/fa_reg/{{role}}.svg'))
+iconset('Tabler', 'tabler', line=svgsrc(f'{C}/tabler_o/{{role}}.svg'))
+iconset('Material', 'material', solid=svgsrc(f'{C}/mdi/{{role}}.svg'))
+iconset('Lucide', 'lucide', line=svgsrc(f'{C}/lucide/{{role}}.svg'))
+iconset('Game Icons', 'gameicons', solid=svgsrc(f'{C}/gameicons/{{role}}.svg', strip_bg=True))
+iconset('Boxicons', 'boxicons', line=svgsrc(f'{I}/boxicons/{{role}}.svg'), solid=svgsrc(f'{I}/boxicons-filled/{{role}}.svg'))
+iconset('Material Symbols', 'materialsymbols', line=svgsrc(f'{I}/material-symbols-outline-rounded/{{role}}.svg'), solid=svgsrc(f'{I}/material-symbols-rounded/{{role}}.svg'))
+iconset('Hugeicons', 'hugeicons', line=svgsrc(f'{I}/hugeicons/{{role}}.svg'))
+iconset('Iconoven', 'iconoven', line=svgsrc(f'{I}/iconoven/{{role}}.svg'))
+iconset('Line Awesome', 'lineawesome', line=svgsrc(f'{I}/la/{{role}}.svg'))
+iconset('Noto', 'noto', line=glyphsrc(f'{DL}/fonts/NotoSansSymbols2.ttf', 0x2654), solid=glyphsrc(f'{DL}/fonts/NotoSansSymbols2.ttf', 0x265A))
+iconset('DejaVu', 'dejavu', line=glyphsrc(f'{DL}/fonts/DejaVuSans.ttf', 0x2654), solid=glyphsrc(f'{DL}/fonts/DejaVuSans.ttf', 0x265A))
+for folder, text in [('boxicons', 'Boxicons, https://boxicons.com, MIT'), ('materialsymbols', 'Material Symbols by Google, Apache License 2.0'),
+                     ('hugeicons', 'Hugeicons free, https://hugeicons.com, MIT'), ('iconoven', 'IconOven, MIT'),
+                     ('lineawesome', 'Line Awesome by Icons8, Apache License 2.0')]:
+    open(f'{OUT}/pieces/{folder}/LICENSE.txt', 'w').write(text + '\nObtained through Iconify (https://iconify.design); recoloured for this pack.\n')
+shutil.copy(f'{DL}/fonts/OFL-noto.txt', f'{OUT}/pieces/noto/LICENSE.txt')
+shutil.copy(f'{DL}/fonts/LICENSE', f'{OUT}/pieces/dejavu/LICENSE.txt')
 for folder, lic in [('fontawesome', 'fontawesome'), ('tabler', 'tabler'), ('material', 'mdi'), ('lucide', 'lucide'), ('gameicons', 'gameicons')]:
     shutil.copy(f'{C}/licenses/{lic}.txt', f'{OUT}/pieces/{folder}/LICENSE.txt')
 

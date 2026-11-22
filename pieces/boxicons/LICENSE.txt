@@ -1,0 +1,2 @@
+Boxicons, https://boxicons.com, MIT
+Obtained through Iconify (https://iconify.design); recoloured for this pack.

@@ -1,6 +1,6 @@
 # Lichess Neo pack: Modern Mix
 
-33 piece sets and 26 boards for [Lichess Neo](https://github.com/theophile-wallez/LichessNeo).
+40 piece sets and 26 boards for [Lichess Neo](https://github.com/theophile-wallez/LichessNeo).
 Import: paste this repository's link under **Packs** in the extension's settings.
 
 ## Pieces
@@ -37,6 +37,13 @@ Import: paste this repository's link under **Packs** in the extension's settings
 | Material     | [Material Design Icons](https://pictogrammers.com/library/mdi/), recoloured    | Apache 2.0 |
 | Lucide       | [Lucide](https://lucide.dev), recoloured                                       | ISC       |
 | Game Icons   | [game-icons.net](https://game-icons.net) by Skoll, recoloured                 | CC BY 3.0 |
+| Boxicons     | [Boxicons](https://boxicons.com) outline (white) and filled (black)          | MIT       |
+| Material Symbols | Google's [Material Symbols](https://fonts.google.com/icons), outlined (white) and filled (black) | Apache 2.0 |
+| Hugeicons    | [Hugeicons](https://hugeicons.com) free, recoloured                            | MIT       |
+| Iconoven     | IconOven, recoloured                                                           | MIT       |
+| Line Awesome | [Line Awesome](https://icons8.com/line-awesome) by Icons8, recoloured          | Apache 2.0 |
+| Noto         | chess glyphs of [Noto Sans Symbols 2](https://fonts.google.com/noto/specimen/Noto+Sans+Symbols+2) | OFL 1.1 |
+| DejaVu       | chess glyphs of [DejaVu Sans](https://dejavu-fonts.github.io)                  | Bitstream Vera / DejaVu |
 
 Pixel sets were cut from their sprite sheets and scaled up nearest-neighbour;
 Illustrated was downscaled to 256px. Icon sets were filled in and recoloured

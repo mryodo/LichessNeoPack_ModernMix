@@ -132,6 +132,34 @@
     {
       "name": "Game Icons",
       "path": "pieces/gameicons/{piece}.png"
+    },
+    {
+      "name": "Boxicons",
+      "path": "pieces/boxicons/{piece}.png"
+    },
+    {
+      "name": "Material Symbols",
+      "path": "pieces/materialsymbols/{piece}.png"
+    },
+    {
+      "name": "Hugeicons",
+      "path": "pieces/hugeicons/{piece}.png"
+    },
+    {
+      "name": "Iconoven",
+      "path": "pieces/iconoven/{piece}.png"
+    },
+    {
+      "name": "Line Awesome",
+      "path": "pieces/lineawesome/{piece}.png"
+    },
+    {
+      "name": "Noto",
+      "path": "pieces/noto/{piece}.png"
+    },
+    {
+      "name": "DejaVu",
+      "path": "pieces/dejavu/{piece}.png"
     }
   ],
   "board": [
