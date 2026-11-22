@@ -139,6 +139,61 @@ for folder, name, accents in (('bauhaus', 'Bauhaus', True), ('bauhausmono', 'Bau
                 f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="7 3 86 90"><style>*{{fill:{body};stroke:{line};stroke-width:3.5;stroke-linejoin:miter}}.a{{fill:{acc}}}</style>{SHAPES[r]}</svg>')
     pieceset(name, folder, 'svg')
 
+# --- ready-made SVG sets, copied as they are (sources and licenses in README / each folder's LICENSE.txt)
+C = f'{DL}/cand'
+import shutil
+for folder, name in [('livius', 'Livius'), ('meridian_shaded', 'Meridian'), ('ansuz', 'Ansuz'), ('openmoji', 'OpenMoji'),
+                     ('wb_Brilliants', 'Brilliants'), ('wb_Calendar', 'Calendar'), ('wb_Halloween', 'Halloween'),
+                     ('wb_Knights_and_Dragons', 'Knights & Dragons'), ('metaltops', 'Metaltops'), ('halloween_burra', 'Pumpkins')]:
+    out = folder.lower().replace('wb_', '').replace('_', '')
+    shutil.copytree(f'{C}/{folder}', f'{OUT}/pieces/{out}')
+    if os.path.exists(f'{C}/licenses/{folder}.txt'): shutil.copy(f'{C}/licenses/{folder}.txt', f'{OUT}/pieces/{out}/LICENSE.txt')
+    pieceset(name, out, 'svg')
+
+# --- single-colour icon sets, recoloured: cream body with dark lines vs charcoal body
+CREAM, INK, CHAR, GREY = (245, 241, 233, 255), (30, 30, 36, 255), (36, 38, 43, 255), (150, 154, 162, 255)
+def alpha(svgfile, px=224, strip_bg=False):
+    data = open(svgfile, 'rb').read()
+    if strip_bg: data = data.replace(b'<path d="M0 0h512v512H0z"/>', b'')
+    png = subprocess.run(['rsvg-convert', '-w', str(px), '-h', str(px), '--keep-aspect-ratio', '-'], input=data, capture_output=True, check=True).stdout
+    return Image.open(io.BytesIO(png)).convert('RGBA').getchannel('A')
+def filled(a):
+    """Silhouette of a line icon: everything not reachable from the border."""
+    from PIL import ImageDraw, ImageChops
+    m = a.point(lambda v: 255 if v > 64 else 0).convert('L')
+    big = Image.new('L', (m.width + 2, m.height + 2)); big.paste(m, (1, 1))
+    ImageDraw.floodfill(big, (0, 0), 128)
+    inside = big.point(lambda v: 0 if v == 128 else 255).crop((1, 1, m.width + 1, m.height + 1))
+    return ImageChops.lighter(inside, a)
+def layer(mask, color):
+    im = Image.new('RGBA', mask.size, color); im.putalpha(mask); return im
+def place(im, path):
+    """Icons fill their whole box: give them a margin, bottom-heavy like real pieces."""
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    sq = Image.new('RGBA', (256, 256)); sq.paste(im, ((256 - im.width) // 2, 256 - im.height - 10), im); sq.save(path)
+def iconset(name, folder, solid=None, line=None, strip_bg=False):
+    """line: outlined glyph, filled in for the body; solid: filled glyph, used when there is no line one."""
+    from PIL import ImageChops
+    for r in ROLES:
+        l = alpha(line.format(role=r)) if line else None
+        if l is None:  # solid only: a grown silhouette makes white's outline
+            s = alpha(solid.format(role=r), strip_bg=strip_bg)
+            ring = s.filter(ImageFilter.MaxFilter(7))
+            w = Image.alpha_composite(layer(ring, INK), layer(s, CREAM)); b = Image.alpha_composite(layer(ring, CHAR), layer(s, CHAR))
+        else:
+            body = filled(l)
+            inner = ImageChops.multiply(l, body.filter(ImageFilter.MinFilter(29)).filter(ImageFilter.MinFilter(29)))  # drop the outer contour
+            w = Image.alpha_composite(layer(body, CREAM), layer(l, INK)); b = Image.alpha_composite(layer(body, CHAR), layer(inner, GREY))
+        place(w, f'{OUT}/pieces/{folder}/w{r}.png'); place(b, f'{OUT}/pieces/{folder}/b{r}.png')
+    pieceset(name, folder)
+iconset('Font Awesome', 'fontawesome', line=f'{C}/fa_reg/{{role}}.svg')
+iconset('Tabler', 'tabler', line=f'{C}/tabler_o/{{role}}.svg')
+iconset('Material', 'material', solid=f'{C}/mdi/{{role}}.svg')
+iconset('Lucide', 'lucide', line=f'{C}/lucide/{{role}}.svg')
+iconset('Game Icons', 'gameicons', solid=f'{C}/gameicons/{{role}}.svg', strip_bg=True)
+for folder, lic in [('fontawesome', 'fontawesome'), ('tabler', 'tabler'), ('material', 'mdi'), ('lucide', 'lucide'), ('gameicons', 'gameicons')]:
+    shutil.copy(f'{C}/licenses/{lic}.txt', f'{OUT}/pieces/{folder}/LICENSE.txt')
+
 # --- boards: own SVGs (CC0)
 def svg(light, dark, extra='', darkfill=None, defs=''):
     sq = ''.join(f'<rect x="{x}" y="{y}" width="1" height="1" fill="{darkfill(x, y) if darkfill else dark}"/>'

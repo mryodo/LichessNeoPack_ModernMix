@@ -1,0 +1,20 @@
+Calendar chess piece set
+© WBChess, https://wbchess.com
+
+This set is licensed under the Creative Commons Attribution 4.0
+International License (CC BY 4.0).
+
+Legal code: https://creativecommons.org/licenses/by/4.0/legalcode
+Human-readable summary: https://creativecommons.org/licenses/by/4.0/deed.en
+
+You may copy, adapt, and share these pieces, including in commercial work.
+You must credit WBChess, link to the license, and indicate if you made changes.
+
+The links below do not limit the license and are not a condition of it.
+They are pages where the set can be used right away.
+
+Generate a diagram here:
+https://wbchess.com/service_fen.php
+
+Animated diagrams:
+https://wbchess.com/service_anim.php

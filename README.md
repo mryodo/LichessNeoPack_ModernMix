@@ -1,6 +1,6 @@
 # Lichess Neo pack: Modern Mix
 
-18 piece sets and 10 boards for [Lichess Neo](https://github.com/theophile-wallez/LichessNeo).
+33 piece sets and 10 boards for [Lichess Neo](https://github.com/theophile-wallez/LichessNeo).
 Import: paste this repository's link under **Packs** in the extension's settings.
 
 ## Pieces
@@ -25,9 +25,22 @@ Import: paste this repository's link under **Packs** in the extension's settings
 | Silhouette   | [Chess Pieces in .svg Format](https://opengameart.org/content/chess-pieces-in-svg-format) by femrek, recoloured | CC0 |
 | Bauhaus      | drawn for this pack: geometric, shapes follow the moves                       | CC0       |
 | Bauhaus Mono | the same without the colour accents                                            | CC0       |
+| Livius       | [kmar/chess_svg_piece_sets](https://github.com/kmar/chess_svg_piece_sets) by Martin Sedlák | CC0 |
+| Meridian     | kmar/chess_svg_piece_sets (meridian_shaded, after a 1952 German newspaper)     | CC0       |
+| Ansuz        | [GaiusHalley/ansuz](https://github.com/GaiusHalley/ansuz)                      | CC BY-SA 4.0 |
+| OpenMoji     | [OpenMoji](https://openmoji.org) chess symbols U+2654–265F                     | CC BY-SA 4.0 |
+| Brilliants, Calendar, Halloween, Knights & Dragons | [WBChess](https://wbchess.com) ([Andyshark1974/ChessPieces](https://github.com/Andyshark1974/ChessPieces)) | CC BY 4.0 |
+| Metaltops    | [pychess](https://github.com/pychess/pychess/tree/master/pieces/metaltops)    | GPL       |
+| Pumpkins     | [BurraAbhishek/halloween-chess-piece-set](https://github.com/BurraAbhishek/halloween-chess-piece-set) | MIT |
+| Font Awesome | [Font Awesome](https://fontawesome.com) free icons, recoloured                 | CC BY 4.0 |
+| Tabler       | [Tabler Icons](https://tabler.io/icons), recoloured                            | MIT       |
+| Material     | [Material Design Icons](https://pictogrammers.com/library/mdi/), recoloured    | Apache 2.0 |
+| Lucide       | [Lucide](https://lucide.dev), recoloured                                       | ISC       |
+| Game Icons   | [game-icons.net](https://game-icons.net) by Skoll, recoloured                 | CC BY 3.0 |
 
 Pixel sets were cut from their sprite sheets and scaled up nearest-neighbour;
-Illustrated was downscaled to 256px. The MIT notice is in
+Illustrated was downscaled to 256px. Icon sets were filled in and recoloured
+(cream with dark lines vs charcoal). Each folder that came with a license keeps it as `LICENSE.txt`. The MIT notice is in
 [pieces/LICENSE-maurimo.txt](pieces/LICENSE-maurimo.txt).
 
 ## Boards

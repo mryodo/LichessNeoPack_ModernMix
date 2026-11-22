@@ -72,6 +72,66 @@
     {
       "name": "Bauhaus Mono",
       "path": "pieces/bauhausmono/{piece}.svg"
+    },
+    {
+      "name": "Livius",
+      "path": "pieces/livius/{piece}.svg"
+    },
+    {
+      "name": "Meridian",
+      "path": "pieces/meridianshaded/{piece}.svg"
+    },
+    {
+      "name": "Ansuz",
+      "path": "pieces/ansuz/{piece}.svg"
+    },
+    {
+      "name": "OpenMoji",
+      "path": "pieces/openmoji/{piece}.svg"
+    },
+    {
+      "name": "Brilliants",
+      "path": "pieces/brilliants/{piece}.svg"
+    },
+    {
+      "name": "Calendar",
+      "path": "pieces/calendar/{piece}.svg"
+    },
+    {
+      "name": "Halloween",
+      "path": "pieces/halloween/{piece}.svg"
+    },
+    {
+      "name": "Knights & Dragons",
+      "path": "pieces/knightsanddragons/{piece}.svg"
+    },
+    {
+      "name": "Metaltops",
+      "path": "pieces/metaltops/{piece}.svg"
+    },
+    {
+      "name": "Pumpkins",
+      "path": "pieces/halloweenburra/{piece}.svg"
+    },
+    {
+      "name": "Font Awesome",
+      "path": "pieces/fontawesome/{piece}.png"
+    },
+    {
+      "name": "Tabler",
+      "path": "pieces/tabler/{piece}.png"
+    },
+    {
+      "name": "Material",
+      "path": "pieces/material/{piece}.png"
+    },
+    {
+      "name": "Lucide",
+      "path": "pieces/lucide/{piece}.png"
+    },
+    {
+      "name": "Game Icons",
+      "path": "pieces/gameicons/{piece}.png"
     }
   ],
   "board": [
